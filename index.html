@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aim Sensitivity Calculator - Gerador de Sensibilidade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Aim Sensitivity Calculator</h1>
+            <p>Gere suas configurações de sensibilidade personalizadas para máxima precisão</p>
+        </header>
+
+        <main>
+            <form id="sensitivityForm">
+                <section class="form-section">
+                    <h2>📱 Informações do Dispositivo</h2>
+                    
+                    <div class="form-group">
+                        <label for="phoneModel">Modelo do Celular</label>
+                        <input type="text" id="phoneModel" placeholder="Ex: Samsung A12, iPhone 12, Redmi Note 10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dpi">DPI Utilizada</label>
+                        <input type="number" id="dpi" min="100" max="800" placeholder="Ex: 240, 300, 400" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="screenSize">Tamanho da Tela (polegadas)</label>
+                        <input type="number" id="screenSize" min="4" max="7" step="0.1" placeholder="Ex: 6.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="touchSpeed">Velocidade do Toque</label>
+                        <select id="touchSpeed" required>
+                            <option value="">Selecione...</option>
+                            <option value="low">Lento (60Hz)</option>
+                            <option value="medium">Médio (90Hz)</option>
+                            <option value="high">Rápido (120Hz+)</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>⚔️ Estilo de Jogo</h2>
+                    
+                    <div class="form-group">
+                        <label for="gameStyle">Qual é seu estilo de jogo?</label>
+                        <select id="gameStyle" required>
+                            <option value="">Selecione...</option>
+                            <option value="rushador">Rushador (Agressivo)</option>
+                            <option value="capa">Capa (Defensivo)</option>
+                            <option value="sniper">Sniper (AWM/Precisão)</option>
+                            <option value="suporte">Suporte (Tático)</option>
+                            <option value="balanceado">Balanceado</option>
+                        </select>
+                    </div>
+                </section>
+
+                <button type="submit" class="btn-calculate">🚀 Gerar Configuração</button>
+            </form>
+
+            <section id="results" class="results hidden">
+                <h2>⚙️ Suas Configurações Otimizadas</h2>
+                
+                <div class="device-info">
+                    <p><strong>Dispositivo:</strong> <span id="resultDevice"></span></p>
+                    <p><strong>Estilo:</strong> <span id="resultStyle"></span></p>
+                </div>
+
+                <div class="sensitivity-grid">
+                    <div class="sensitivity-card">
+                        <h3>Sensibilidade Geral</h3>
+                        <div class="value" id="sensiGeral"></div>
+                        <p class="description">Controle geral da câmera</p>
+                    </div>
+
+                    <div class="sensitivity-card">
+                        <h3>Red Dot</h3>
+                        <div class="value" id="sensiRedDot"></div>
+                        <p class="description">Mira próxima (sem zoom)</p>
+                    </div>
+
+                    <div class="sensitivity-card">
+                        <h3>Mira 2x</h3>
+                        <div class="value" id="sensi2x"></div>
+                        <p class="description">Zoom 2x</p>
+                    </div>
+
+                    <div class="sensitivity-card">
+                        <h3>Mira 4x</h3>
+                        <div class="value" id="sensi4x"></div>
+                        <p class="description">Zoom 4x</p>
+                    </div>
+
+                    <div class="sensitivity-card">
+                        <h3>AWM</h3>
+                        <div class="value" id="sensiAWM"></div>
+                        <p class="description">Sniper de precisão</p>
+                    </div>
+
+                    <div class="sensitivity-card">
+                        <h3>Olhadinha</h3>
+                        <div class="value" id="sensiOlhadinha"></div>
+                        <p class="description">Velocidade de giro rápido</p>
+                    </div>
+                </div>
+
+                <div class="tips-section">
+                    <h3>💡 Dicas Importantes</h3>
+                    <ul>
+                        <li>✅ Todas as configurações estão <strong>acima de 100</strong> para mira rápida</li>
+                        <li>✅ Otimizadas para <strong>puxar capa</strong> com precisão</li>
+                        <li>✅ Configuradas para maximizar <strong>headshots</strong></li>
+                        <li>✅ Equilíbrio entre <strong>controle e velocidade</strong></li>
+                        <li>⚠️ Ajuste nos seus testes se necessário (cada jogador é único!)</li>
+                    </ul>
+                </div>
+
+                <button type="button" class="btn-reset" onclick="resetForm()">🔄 Recalcular</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Aim Sensitivity Calculator © 2026 | Desenvolvido para máxima precisão</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
