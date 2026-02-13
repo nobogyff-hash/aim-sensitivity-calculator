@@ -1,23 +1,14 @@
-// script.js
+// Complete sensitivity calculation logic and form handling
 
-// Function to calculate sensitivity
-function calculateSensitivity(sensitivityValue, zoomLevel) {
-    return sensitivityValue * (1 / zoomLevel);
+function calculateSensitivity(input) {
+    // Example calculation logic for sensitivity
+document.getElementById('sensitivityResult').innerText = 'Calculated Sensitivity: ' + (input * 2);  // Dummy calculation
 }
 
-// Function to convert sensitivity to different formats
-function convertSensitivity(value, format) {
-    switch (format) {
-        case 'cm':
-            return value * 2.54;
-        case 'inches':
-            return value * 0.393701;
-        default:
-            return value; // return as is for default format
-    }
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const input = document.getElementById('sensitivityInput').value;
+    calculateSensitivity(input);
 }
 
-// Example usage
-const sensitivity = calculateSensitivity(20, 2);
-const sensitivityInCm = convertSensitivity(sensitivity, 'cm');
-console.log('Sensitivity:', sensitivityInCm, 'cm');
+document.getElementById('sensitivityForm').addEventListener('submit', handleFormSubmit);
