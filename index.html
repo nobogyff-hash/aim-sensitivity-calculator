@@ -41,7 +41,14 @@ button{
     border-radius:10px;
 }
 </style><style>
-body{
+body{<div id="login">
+  <div class="login-box">
+    <h2>🔐 Login RK</h2>
+    <input type="password" id="senha" placeholder="Digite a senha">
+    <button onclick="verificarSenha()">ENTRAR</button>
+    <p id="erro" style="color:red;"></p>
+  </div>
+</div>
     margin:0;
     font-family:'Segoe UI',sans-serif;
     background:black;
