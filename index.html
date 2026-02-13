@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador Inteligente FF</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#000000,#1a1a1a);
+    color:white;
+    text-align:center;
+}
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+h1{
+    color:#ff0000;
+}
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    background:#ff0000;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+.resultado{
+    margin-top:20px;
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎯 Gerador Inteligente Automático</h1>
+    <p>Detecta seu celular automaticamente</p>
+    <button onclick="gerar()">GERAR SENSIBILIDADE 🔥</button>
+    <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+function detectarCelular() {
+    let ua = navigator.userAgent;
+    let modelo = "Não identificado";
+
+    if (ua.includes("SM-")) modelo = "Samsung";
+    else if (ua.includes("Redmi")) modelo = "Xiaomi Redmi";
+    else if (ua.includes("Moto")) modelo = "Motorola";
+    else if (ua.includes("Infinix")) modelo = "Infinix";
+    else if (ua.includes("Realme")) modelo = "Realme";
+    else modelo = "Android Genérico";
+
+    return modelo;
+}
+
+function gerar(){
+
+    let modelo = detectarCelular();
+    let ram = navigator.deviceMemory || 4;
+    let cpu = navigator.hardwareConcurrency || 4;
+
+    function random(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    }
+
+    let geral, redDot, mira2x, mira4x, awm, olhadinha, dpi;
+
+    if(ram <= 3){
+        geral = random(160,180);
+        redDot = random(150,170);
+        mira2x = random(140,165);
+        mira4x = random(130,155);
+        awm = random(120,145);
+        olhadinha = random(170,190);
+        dpi = "600 - 700";
+    }
+    else if(ram <= 6){
+        geral = random(170,195);
+        redDot = random(160,185);
+        mira2x = random(150,180);
+        mira4x = random(140,170);
+        awm = random(130,160);
+        olhadinha = random(180,200);
+        dpi = "700 - 800";
+    }
+    else{
+        geral = random(180,200);
+        redDot = random(170,195);
+        mira2x = random(160,190);
+        mira4x = random(150,180);
+        awm = random(140,170);
+        olhadinha = random(190,200);
+        dpi = "800 - 900";
+    }
+
+    document.getElementById("resultado").innerHTML = `
+        <h3>🔥 CONFIGURAÇÃO GERADA 🔥</h3>
+        Modelo Detectado: ${modelo} <br>
+        RAM Estimada: ${ram}GB <br>
+        Núcleos CPU: ${cpu} <br><br>
+
+        Geral: ${geral} <br>
+        Red Dot: ${redDot} <br>
+        Mira 2x: ${mira2x} <br>
+        Mira 4x: ${mira4x} <br>
+        AWM: ${awm} <br>
+        Olhadinha: ${olhadinha} <br><br>
+
+        DPI Recomendada: ${dpi} <br><br>
+        <strong>Foco em subida rápida de capa 🎯</strong>
+    `;
+}
+</script>
+
+</body>
+</html>
