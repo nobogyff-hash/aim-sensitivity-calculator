@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERADOR DE SENSIBILIDADE RK</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0b0b0b;
+    color:white;
+    text-align:center;
+}
+
+/* NEON VERMELHO */
+.neon{
+    color:#ff0000;
+    text-shadow:
+        0 0 5px #ff0000,
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 40px #ff0000,
+        0 0 80px #ff0000;
+}
+
+.container{
+    padding:20px;
+}
+
+input, select, button{
+    padding:10px;
+    margin:8px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+}
+
+button{
+    background:#111;
+    color:#ff0000;
+    border:2px solid #ff0000;
+    box-shadow:0 0 15px #ff0000;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    box-shadow:0 0 30px #ff0000;
+}
+
+.card{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#111;
+    box-shadow:0 0 20px #ff0000;
+}
+
+.hidden{
+    display:none;
+}
+
+.footer{
+    margin-top:40px;
+    padding:15px;
+    border-top:1px solid #333;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="container">
+    <h2 class="neon">🔐 GERADOR DE SENSIBILIDADE RK</h2>
+    <input type="password" id="senha" placeholder="Digite a senha">
+    <br>
+    <button onclick="verificarSenha()">Entrar</button>
+</div>
+
+<!-- SISTEMA -->
+<div id="app" class="container hidden">
+    <h1 class="neon">👑 GERADOR DE SENSIBILIDADE RK 👑</h1>
+
+    <div id="dispositivoInfo" class="card"></div>
+
+    <select id="desempenho">
+        <option value="baixo">Desempenho Baixo</option>
+        <option value="medio">Desempenho Médio</option>
+        <option value="alto">Desempenho Alto</option>
+    </select>
+
+    <br>
+    <button onclick="gerar()">Gerar Configuração</button>
+
+    <div id="resultado" class="card hidden"></div>
+
+    <div class="card">
+        <h3 class="neon">🎯 Auxílio de Mira RK</h3>
+        <p>✔ Puxe levemente para cima ao atirar</p>
+        <p>✔ Use botão entre 55% e 65%</p>
+        <p>✔ Sens alta facilita subir capa</p>
+        <p>✔ Treine no modo treinamento antes da ranqueada</p>
+    </div>
+
+    <div class="card">
+        <h3 class="neon">🔥 Dica de Configuração Extra</h3>
+        <p>• HUD personalizada com botão médio</p>
+        <p>• Mira rápida + puxada curta</p>
+        <p>• Evite arrastar demais o dedo</p>
+        <p>• Ajuste fino até ficar confortável</p>
+    </div>
+
+    <div class="footer">
+        Desenvolvido por 🚀<br>
+        <a href="https://instagram.com/vulgo__r.k" target="_blank"
+        style="color:#ff0000;text-decoration:none;font-weight:bold;">
+        @vulgo__r.k
+        </a>
+    </div>
+</div>
+
+<script>
+
+/* LOGIN */
+function verificarSenha(){
+    var senha = document.getElementById("senha").value;
+    if(senha === "RKS2026"){
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        detectarDispositivo();
+    } else{
+        alert("Senha incorreta!");
+    }
+}
+
+/* DETECTOR AVANÇADO */
+function detectarDispositivo(){
+    var ua = navigator.userAgent;
+    var largura = screen.width;
+    var altura = screen.height;
+    var memoria = navigator.deviceMemory || "Não disponível";
+    var cpu = navigator.hardwareConcurrency || "Não disponível";
+
+    var nomeDispositivo = "Android";
+
+    if(ua.includes("iPhone")) nomeDispositivo = "iPhone";
+    if(ua.includes("Samsung")) nomeDispositivo = "Samsung";
+    if(ua.includes("Moto")) nomeDispositivo = "Motorola";
+    if(ua.includes("Xiaomi")) nomeDispositivo = "Xiaomi";
+
+    document.getElementById("dispositivoInfo").innerHTML = `
+    <h3 class="neon">📱 Dispositivo Detectado</h3>
+    Nome: ${nomeDispositivo}<br>
+    Resolução: ${largura} x ${altura}<br>
+    Memória RAM: ${memoria} GB<br>
+    Núcleos CPU: ${cpu}
+    `;
+}
+
+/* GERADOR */
+function gerar(){
+
+    var desempenho = document.getElementById("desempenho").value;
+    var largura = screen.width;
+    var altura = screen.height;
+
+    var base = 170;
+
+    if(desempenho === "baixo") base = 175;
+    if(desempenho === "medio") base = 185;
+    if(desempenho === "alto") base = 195;
+
+    var ajuste = (largura + altura) / 1300;
+
+    var geral = Math.min(200, Math.floor(base + ajuste));
+    var red = geral - 10;
+    var mira2 = geral - 20;
+    var mira4 = geral - 30;
+    var awm = geral - 40;
+    var olhadinha = Math.min(200, geral + 5);
+
+    var dpi = (desempenho === "alto") ? "560 - 600" :
+              (desempenho === "medio") ? "520 - 560" :
+              "480 - 520";
+
+    var botao = (largura > 400) ? "55%" : "60%";
+
+    document.getElementById("resultado").classList.remove("hidden");
+    document.getElementById("resultado").innerHTML = `
+    <h2 class="neon">⚙️ CONFIGURAÇÃO GERADA</h2>
+    Geral: ${geral}<br>
+    Red Dot: ${red}<br>
+    Mira 2x: ${mira2}<br>
+    Mira 4x: ${mira4}<br>
+    AWM: ${awm}<br>
+    Olhadinha: ${olhadinha}<br><br>
+    DPI Recomendada: ${dpi}<br>
+    Botão Ideal: ${botao}<br>
+    Precisão Estimada: 90% - 96%
+    `;
+}
+
+</script>
+
+</body>
+</html>
