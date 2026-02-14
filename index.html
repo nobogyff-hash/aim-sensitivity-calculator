@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERADOR DE SENSIBILIDADE RK</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    text-align:center;
+}
+
+.neon{
+    color:#ff0000;
+    text-shadow:0 0 5px red,0 0 20px red,0 0 40px red;
+    animation:pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse{
+    from{ text-shadow:0 0 5px red;}
+    to{ text-shadow:0 0 35px red;}
+}
+
+.box{
+    background:#111;
+    padding:20px;
+    margin:20px;
+    border-radius:15px;
+    box-shadow:0 0 20px red;
+}
+
+button{
+    background:red;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    width:200px;
+}
+</style>
+</head>
+<body>
+
+<h1 class="neon">GERADOR DE SENSIBILIDADE RK</h1>
+<p>@vulgo__r.k</p>
+
+<div class="box" id="login">
+<h3 class="neon">📘 MANUAL DE INSTRUÇÕES</h3>
+<p>
+1️⃣ Detecte seu dispositivo.<br>
+2️⃣ Gere as 3 opções de sensibilidade.<br>
+3️⃣ Escolha a que ficar mais confortável.<br>
+4️⃣ Ajuste a DPI recomendada no seu aparelho.<br>
+5️⃣ Use botão entre 48% e 60%.<br><br>
+⚠️ O desempenho depende do seu treino.
+</p>
+
+<h3>Senha de Acesso</h3>
+<input type="password" id="senha">
+<br><br>
+<button onclick="entrar()">Entrar</button>
+<p id="erro"></p>
+</div>
+
+<div id="sistema" style="display:none;">
+
+<div class="box">
+<h3 class="neon">📱 Detector Avançado</h3>
+<p id="info"></p>
+<button onclick="detectar()">Detectar Dispositivo</button>
+</div>
+
+<div class="box">
+<h3 class="neon">🎯 Gerar Sensibilidade Inteligente</h3>
+<button onclick="gerar()">Gerar 3 Opções</button>
+<p id="resultado"></p>
+</div>
+
+<div class="box">
+<h3 class="neon">🔫 Sensibilidade por Tipo de Arma</h3>
+<p id="armas"></p>
+</div>
+
+</div>
+
+<script>
+
+function entrar(){
+    if(document.getElementById("senha").value==="RKS2026"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("sistema").style.display="block";
+    }else{
+        document.getElementById("erro").innerHTML="Senha incorreta!";
+    }
+}
+
+function detectar(){
+
+    let ua = navigator.userAgent;
+    let largura = screen.width;
+    let altura = screen.height;
+    let ram = navigator.deviceMemory || 4;
+    let cpu = navigator.hardwareConcurrency || 4;
+
+    let modelo="Não identificado";
+
+    let matchSamsung = ua.match(/SM-\w+/);
+    if(matchSamsung) modelo="Samsung "+matchSamsung[0];
+    else if(ua.toLowerCase().includes("moto")) modelo="Motorola";
+    else if(ua.toLowerCase().includes("mi")) modelo="Xiaomi";
+    else if(ua.includes("iPhone")) modelo="iPhone";
+
+    let nivel="Intermediário";
+    if(ram <=3) nivel="Básico";
+    else if(ram >=6) nivel="Avançado";
+
+    document.getElementById("info").innerHTML=
+    "Modelo provável: "+modelo+"<br>"+
+    "Resolução: "+largura+"x"+altura+"<br>"+
+    "RAM detectada: "+ram+"GB<br>"+
+    "CPU: "+cpu+" núcleos<br>"+
+    "Desempenho: "+nivel;
+}
+
+function gerar(){
+
+    let ram = navigator.deviceMemory || 4;
+
+    function rand(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    }
+
+    let base;
+
+    if(ram <=3){
+        base={g:165,r:160,x2:150,x4:140,a:130,o:180,dpi:520,btn:60};
+    }else if(ram <=5){
+        base={g:180,r:175,x2:165,x4:155,a:140,o:190,dpi:580,btn:52};
+    }else{
+        base={g:195,r:185,x2:175,x4:165,a:150,o:200,dpi:640,btn:48};
+    }
+
+    let html="";
+
+    for(let i=1;i<=3;i++){
+        html+="<b>OPÇÃO "+i+"</b><br>"+
+        "Geral: "+rand(base.g-5,base.g+5)+"<br>"+
+        "Red Dot: "+rand(base.r-5,base.r+5)+"<br>"+
+        "2x: "+rand(base.x2-5,base.x2+5)+"<br>"+
+        "4x: "+rand(base.x4-5,base.x4+5)+"<br>"+
+        "AWM: "+rand(base.a-5,base.a+5)+"<br>"+
+        "Olhadinha: "+rand(base.o-5,base.o+5)+"<br>"+
+        "DPI Recomendada: "+base.dpi+"<br>"+
+        "Botão de tiro: "+base.btn+"%<br><br>";
+    }
+
+    document.getElementById("resultado").innerHTML=html;
+
+    document.getElementById("armas").innerHTML=
+    "<b>AR:</b> 180–195<br>"+
+    "<b>SMG:</b> 185–200<br>"+
+    "<b>Shotgun:</b> 170–180<br>"+
+    "<b>Sniper:</b> 140–155<br>"+
+    "<b>Pistolas:</b> 180–190<br><br>"+
+    "<b>DICA RK:</b><br>"+
+    "• Use a DPI recomendada<br>"+
+    "• Botão menor sobe capa mais rápido<br>"+
+    "• Não arraste demais o dedo<br>"+
+    "• Treine no modo treino antes do ranqueado";
+}
+
+</script>
+
+</body>
+  </html>
