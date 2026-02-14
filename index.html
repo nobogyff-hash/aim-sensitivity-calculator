@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Sensibilidade RK NEO RED</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0a0a0a;
+    color:white;
+    text-align:center;
+}
+
+/* NEON VERMELHO */
+.neon{
+    color:#ff1a1a;
+    text-shadow:
+        0 0 5px #ff0000,
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 40px #ff0000,
+        0 0 80px #ff0000;
+}
+
+.container{
+    padding:20px;
+}
+
+input, select, button{
+    padding:10px;
+    margin:8px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+}
+
+button{
+    background:#111;
+    color:#ff0000;
+    border:2px solid #ff0000;
+    box-shadow:0 0 15px #ff0000;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    box-shadow:0 0 25px #ff0000;
+}
+
+.resultado{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#111;
+    box-shadow:0 0 20px #ff0000;
+}
+
+.hidden{
+    display:none;
+}
+
+.footer{
+    margin-top:40px;
+    padding:15px;
+    border-top:1px solid #333;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="container">
+    <h2 class="neon">🔐 SISTEMA RK NEO RED</h2>
+    <input type="password" id="senha" placeholder="Digite a senha">
+    <br>
+    <button onclick="verificarSenha()">Entrar</button>
+</div>
+
+<!-- APP -->
+<div id="app" class="container hidden">
+    <h1 class="neon">👑 GERADOR DE SENSIBILIDADE RK 👑</h1>
+
+    <p id="modelo"></p>
+
+    <select id="desempenho">
+        <option value="baixo">Celular Fraco</option>
+        <option value="medio">Celular Médio</option>
+        <option value="alto">Celular Forte</option>
+    </select>
+
+    <br>
+    <button onclick="gerar()">Gerar Sensibilidade</button>
+
+    <div id="resultado" class="resultado hidden"></div>
+
+    <div class="resultado">
+        <h3 class="neon">🎯 Auxílio de Mira RK (Treinamento)</h3>
+        <p>✔ Puxada curta e rápida para cima</p>
+        <p>✔ Botão entre 55% e 65%</p>
+        <p>✔ Sensibilidade alta facilita subir capa</p>
+        <p>✔ Treine no modo treino antes da ranqueada</p>
+    </div>
+
+    <div class="footer">
+        Desenvolvido por 🚀<br>
+        <a href="https://instagram.com/vulgo__r.k" target="_blank" 
+        style="color:#ff0000;text-decoration:none;font-weight:bold;">
+        @vulgo__r.k
+        </a>
+    </div>
+</div>
+
+<script>
+
+/* LOGIN */
+function verificarSenha(){
+    var senha = document.getElementById("senha").value;
+    if(senha === "RKS2026"){
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        detectarModelo();
+    } else{
+        alert("Senha incorreta!");
+    }
+}
+
+/* DETECTOR AUTOMÁTICO DO DISPOSITIVO */
+function detectarModelo(){
+    var modelo = navigator.userAgent;
+    document.getElementById("modelo").innerHTML =
+    "📱 Dispositivo Detectado:<br><small>"+modelo+"</small>";
+}
+
+/* GERADOR INTELIGENTE */
+function gerar(){
+    var desempenho = document.getElementById("desempenho").value;
+    var largura = screen.width;
+    var altura = screen.height;
+
+    var base = 170;
+
+    if(desempenho === "baixo") base = 175;
+    if(desempenho === "medio") base = 185;
+    if(desempenho === "alto") base = 195;
+
+    var ajusteTela = (largura + altura) / 1200;
+
+    var geral = Math.min(200, Math.floor(base + ajusteTela));
+    var red = geral - 10;
+    var mira2 = geral - 20;
+    var mira4 = geral - 30;
+    var awm = geral - 40;
+    var olhadinha = Math.min(200, geral + 5);
+
+    var dpi;
+    if(desempenho === "baixo") dpi = "480 - 520";
+    if(desempenho === "medio") dpi = "520 - 560";
+    if(desempenho === "alto") dpi = "560 - 600";
+
+    var botao = (largura > 400) ? "55%" : "60%";
+
+    document.getElementById("resultado").classList.remove("hidden");
+    document.getElementById("resultado").innerHTML = `
+    <h2 class="neon">⚙️ CONFIGURAÇÃO RK GERADA</h2>
+    Geral: ${geral} <br>
+    Red Dot: ${red} <br>
+    Mira 2x: ${mira2} <br>
+    Mira 4x: ${mira4} <br>
+    AWM: ${awm} <br>
+    Olhadinha: ${olhadinha} <br><br>
+    DPI Recomendada: ${dpi} <br>
+    Botão Ideal: ${botao} <br>
+    Precisão Estimada: 90% - 96%
+    `;
+}
+
+</script>
+
+</body>
+</html>
