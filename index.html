@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERADOR DE SENSIBILIDADE RK</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    text-align:center;
+}
+
+.neon{
+    color:#ff0000;
+    text-shadow:0 0 5px red,0 0 20px red,0 0 40px red;
+}
+
+.box{
+    background:#111;
+    padding:20px;
+    margin:20px;
+    border-radius:15px;
+    border:2px solid red;
+    animation:borda 2s infinite alternate;
+}
+
+@keyframes borda{
+    from{ box-shadow:0 0 5px red; }
+    to{ box-shadow:0 0 25px red; }
+}
+
+button{
+    background:red;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    margin:5px;
+}
+
+button:hover{
+    background:#ff3333;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+}
+</style>
+</head>
+<body>
+
+<h1 class="neon">GERADOR DE SENSIBILIDADE RK</h1>
+<p>@vulgo__r.k</p>
+
+<div class="box" id="login">
+<h3 class="neon">📘 MANUAL DE INSTRUÇÕES</h3>
+<p>
+1️⃣ Detecte seu dispositivo.<br>
+2️⃣ Escolha seu perfil.<br>
+3️⃣ Gere as sensibilidades.<br>
+4️⃣ Teste no modo treino antes do ranqueado.<br>
+⚠️ A precisão depende do treino do jogador.
+</p>
+
+<h3>Senha</h3>
+<input type="password" id="senha">
+<br><br>
+<button onclick="entrar()">Entrar</button>
+<p id="erro"></p>
+</div>
+
+<div id="sistema" style="display:none;">
+
+<div class="box">
+<h3 class="neon">📱 Detector Avançado</h3>
+<p id="info"></p>
+<button onclick="detectar()">Detectar</button>
+</div>
+
+<div class="box">
+<h3 class="neon">🎮 Escolha seu Perfil</h3>
+<button onclick="perfil='rush'">🔥 Rushador</button>
+<button onclick="perfil='preciso'">🎯 Preciso</button>
+<button onclick="perfil='controlado'">🧠 Controlado</button>
+<p id="perfilEscolhido"></p>
+</div>
+
+<div class="box">
+<h3 class="neon">🎯 Gerador Inteligente</h3>
+<button onclick="gerar()">Gerar</button>
+<button onclick="gerarForte()">Gerar mais forte</button>
+<p id="resultado"></p>
+</div>
+
+<div class="box">
+<h3 class="neon">🔫 Sensibilidade por Arma</h3>
+<p id="armas"></p>
+</div>
+
+</div>
+
+<script>
+
+let perfil="";
+
+function entrar(){
+    if(document.getElementById("senha").value==="RKS2026"){
+        login.style.display="none";
+        sistema.style.display="block";
+    }else{
+        erro.innerHTML="Senha incorreta!";
+    }
+}
+
+function detectar(){
+    let ua = navigator.userAgent;
+    let ram = navigator.deviceMemory || 4;
+    let cpu = navigator.hardwareConcurrency || 4;
+    let largura = screen.width;
+    let altura = screen.height;
+
+    let modelo="Não identificado";
+    let match = ua.match(/SM-\w+/);
+    if(match) modelo="Samsung "+match[0];
+    else if(ua.toLowerCase().includes("moto")) modelo="Motorola";
+    else if(ua.toLowerCase().includes("mi")) modelo="Xiaomi";
+    else if(ua.includes("iPhone")) modelo="iPhone";
+
+    let nivel="Intermediário";
+    if(ram<=3) nivel="Básico";
+    else if(ram>=6) nivel="Avançado";
+
+    info.innerHTML=
+    "Modelo: "+modelo+"<br>"+
+    "Resolução: "+largura+"x"+altura+"<br>"+
+    "RAM: "+ram+"GB<br>"+
+    "CPU: "+cpu+" núcleos<br>"+
+    "Desempenho: "+nivel;
+}
+
+function basePorPerfil(ram,forcado=false){
+
+    let boost = forcado?10:0;
+
+    if(perfil==="rush"){
+        return {g:185+boost,r:180+boost,x2:170+boost,x4:160+boost,a:145,o:195,dpi:620,btn:48};
+    }
+
+    if(perfil==="preciso"){
+        return {g:175+boost,r:170+boost,x2:160+boost,x4:150+boost,a:140,o:190,dpi:580,btn:52};
+    }
+
+    if(perfil==="controlado"){
+        return {g:165+boost,r:160+boost,x2:150+boost,x4:140+boost,a:135,o:185,dpi:560,btn:58};
+    }
+
+    return {g:170,r:165,x2:155,x4:145,a:135,o:185,dpi:560,btn:55};
+}
+
+function rand(min,max){
+    return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function gerar(){
+    gerarBase(false);
+}
+
+function gerarForte(){
+    gerarBase(true);
+}
+
+function gerarBase(forcado){
+
+    let ram = navigator.deviceMemory || 4;
+    let base = basePorPerfil(ram,forcado);
+
+    let html="";
+
+    for(let i=1;i<=3;i++){
+        html+="<b>OPÇÃO "+i+"</b><br>"+
+        "Geral: "+rand(base.g-5,base.g+5)+"<br>"+
+        "Red Dot: "+rand(base.r-5,base.r+5)+"<br>"+
+        "2x: "+rand(base.x2-5,base.x2+5)+"<br>"+
+        "4x: "+rand(base.x4-5,base.x4+5)+"<br>"+
+        "AWM: "+rand(base.a-5,base.a+5)+"<br>"+
+        "Olhadinha: "+rand(base.o-5,base.o+5)+"<br>"+
+        "DPI: "+base.dpi+"<br>"+
+        "Botão: "+base.btn+"%<br><br>";
+    }
+
+    resultado.innerHTML=html;
+
+    armas.innerHTML=
+    "<b>AR:</b> 180–195<br>"+
+    "<b>SMG:</b> 185–200<br>"+
+    "<b>Shotgun:</b> 170–180<br>"+
+    "<b>Sniper:</b> 140–155<br>"+
+    "<b>Pistolas:</b> 180–190<br>";
+}
+
+</script>
+
+</body>
+  </html>
