@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERADOR DE SENSIBILIDADE RK</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    text-align:center;
+    margin:0;
+}
+
+h1{
+    color:#ff0000;
+    text-shadow:0 0 10px red,0 0 30px red;
+    animation:neon 1.5s infinite alternate;
+}
+
+@keyframes neon{
+    from{ text-shadow:0 0 10px red;}
+    to{ text-shadow:0 0 30px red;}
+}
+
+.box{
+    background:#111;
+    padding:20px;
+    margin:20px;
+    border-radius:15px;
+    border:2px solid red;
+    animation:borda 2s infinite alternate;
+}
+
+@keyframes borda{
+    from{ box-shadow:0 0 5px red;}
+    to{ box-shadow:0 0 25px red;}
+}
+
+button{
+    background:red;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    margin:5px;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#ff3333;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>GERADOR DE SENSIBILIDADE RK</h1>
+<p>@vulgo__r.k</p>
+
+<div class="box" id="login">
+<h3>📘 MANUAL DE INSTRUÇÕES</h3>
+<p>
+1️⃣ Detecte seu dispositivo.<br>
+2️⃣ Escolha seu perfil.<br>
+3️⃣ Gere até 3 opções.<br>
+4️⃣ Teste no modo treino antes do ranqueado.<br>
+⚠️ O desempenho depende do treino do jogador.
+</p>
+
+<h3>🔐 Senha</h3>
+<input type="password" id="senha">
+<br><br>
+<button onclick="entrar()">Entrar</button>
+<p id="erro" style="color:red;"></p>
+</div>
+
+<div id="sistema" style="display:none;">
+
+<div class="box">
+<h3>📱 Detector Avançado</h3>
+<p id="info"></p>
+<button onclick="detectar()">Detectar Dispositivo</button>
+</div>
+
+<div class="box">
+<h3>🎮 Escolha seu Perfil</h3>
+<button onclick="selecionarPerfil('rush')">🔥 Rushador</button>
+<button onclick="selecionarPerfil('preciso')">🎯 Preciso</button>
+<button onclick="selecionarPerfil('controlado')">🧠 Controlado</button>
+<p id="perfilEscolhido"></p>
+</div>
+
+<div class="box">
+<h3>🎯 Gerador Inteligente</h3>
+<button onclick="gerar(false)">Gerar</button>
+<button onclick="gerar(true)">Gerar Mais Forte</button>
+<p id="resultado"></p>
+</div>
+
+<div class="box">
+<h3>🔫 Ajuste por Tipo de Arma</h3>
+<p id="armas"></p>
+</div>
+
+</div>
+
+<script>
+
+let perfil="";
+let classificacao="Intermediário";
+
+function entrar(){
+    if(document.getElementById("senha").value==="RKS2026"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("sistema").style.display="block";
+    }else{
+        document.getElementById("erro").innerText="Senha incorreta!";
+    }
+}
+
+function detectar(){
+
+    let ua = navigator.userAgent;
+    let ram = navigator.deviceMemory || 4;
+    let cpu = navigator.hardwareConcurrency || 4;
+    let largura = screen.width;
+    let altura = screen.height;
+
+    let modelo="Não identificado";
+
+    if(ua.includes("SM-")){
+        let match = ua.match(/SM-\w+/);
+        if(match) modelo="Samsung "+match[0];
+    }
+    else if(ua.toLowerCase().includes("moto")) modelo="Motorola";
+    else if(ua.toLowerCase().includes("mi")) modelo="Xiaomi";
+    else if(ua.includes("iPhone")) modelo="iPhone";
+
+    if(ram<=3) classificacao="Básico (2–3GB)";
+    else if(ram<=6) classificacao="Intermediário (4–6GB)";
+    else classificacao="Avançado (8GB+)";
+
+    let cor = ram<=3 ? "lime" : ram<=6 ? "yellow" : "red";
+
+    document.getElementById("info").innerHTML=
+    "Modelo: "+modelo+"<br>"+
+    "Resolução: "+largura+"x"+altura+"<br>"+
+    "RAM: "+ram+"GB<br>"+
+    "CPU: "+cpu+" núcleos<br>"+
+    "Desempenho: <span style='color:"+cor+"'>"+classificacao+"</span>";
+}
+
+function selecionarPerfil(p){
+    perfil=p;
+    document.getElementById("perfilEscolhido").innerHTML=
+    "Perfil selecionado: <b style='color:red'>"+p.toUpperCase()+"</b>";
+}
+
+function rand(min,max){
+    return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function gerar(forcado){
+
+    if(perfil===""){
+        alert("Escolha um perfil primeiro!");
+        return;
+    }
+
+    let ram = navigator.deviceMemory || 4;
+    let base = 160;
+
+    if(ram<=3) base=170;
+    else if(ram<=6) base=180;
+    else base=190;
+
+    if(perfil==="rush") base+=10;
+    if(perfil==="preciso") base-=5;
+
+    if(forcado) base+=5;
+
+    let html="";
+
+    for(let i=1;i<=3;i++){
+        let geral = rand(base-5,base+5);
+        let red = rand(geral-10,geral-5);
+        let x2 = rand(geral-20,geral-15);
+        let x4 = rand(geral-30,geral-25);
+        let awm = rand(geral-40,geral-35);
+        let olho = rand(geral+5,200);
+
+        let dpi = ram<=3 ? "520–560" : ram<=6 ? "560–600" : "600–650";
+        let botao = larguraPequena() ? "55%" : "50%";
+
+        html += "<b>OPÇÃO "+i+"</b><br>"+
+        "Geral: "+limite(geral)+"<br>"+
+        "Red Dot: "+limite(red)+"<br>"+
+        "2x: "+limite(x2)+"<br>"+
+        "4x: "+limite(x4)+"<br>"+
+        "AWM: "+limite(awm)+"<br>"+
+        "Olhadinha: "+limite(olho)+"<br>"+
+        "DPI Recomendada: "+dpi+"<br>"+
+        "Botão de Tiro: "+botao+"<br><br>";
+    }
+
+    document.getElementById("resultado").innerHTML=html;
+
+    document.getElementById("armas").innerHTML=
+    "<b>AR:</b> Base padrão<br>"+
+    "<b>SMG:</b> +5 Red Dot<br>"+
+    "<b>Shotgun:</b> Geral alto<br>"+
+    "<b>Sniper:</b> AWM controlado<br>"+
+    "<b>Pistolas:</b> Olhadinha alta<br>"+
+    "<b>LMG:</b> Red Dot equilibrado<br>";
+}
+
+function limite(valor){
+    if(valor>200) return 200;
+    if(valor<100) return 100;
+    return valor;
+}
+
+function larguraPequena(){
+    return screen.width < 400;
+}
+
+</script>
+
+</body>
+  </html>
